@@ -11,15 +11,16 @@ public class LandingPage {
 		System.out.println("4. Payments");
 		System.out.println("--- Waiting for input ---");
 		
-		Scanner input = new Scanner(System.in);
+		@SuppressWarnings("resource")
+		Scanner input = new Scanner(System.in);  //Destroy scanner obj. or add warning [TEMP]
 		String data = input.nextLine();
 		
 		if(Integer.parseInt(data)<1||Integer.parseInt(data)>4) {
 			System.out.println("Expected input from 1 to 4");
-			LandingPage.main(args);
+			LandingPage.main(args);  //Ideally replace with while loop [LATER]
 		}
 		else {
-			switch(Integer.parseInt(data)) {
+			switch(Integer.parseInt(data)) {  //Further refinement depending on data flow [LATER]
 			case 1: System.out.println("Okay! Passing Control to Customer Class!");
 			break;
 			case 2: System.out.println("Okay! Passing Control to Subscription Class!");
