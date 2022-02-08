@@ -5,13 +5,17 @@ public class PaymentHandlerTest extends TestCase {
 	//Objective: To verify if the entered payment ID contains 3 to 6 valid characters between 0 to 9
 	
 	public void testvalidatePaymentID001() {
-		PaymentHandler testObject = new PaymentHandler();
 		try {
-			fail("Exception expected");
+			PaymentHandler testObject = new PaymentHandler(100, "Cash");
+			//fail("Exception expected");
+			assertEquals(0, testObject.getID());
+			assertEquals("Cash", testObject.getMethod());
+		} catch (PaymentHandlerExceptionHandler e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			fail("Exception not expected");
 		}
-		catch(Exception e){
-			
-		}
+		
 		
 	}
 	//Test No: 2
