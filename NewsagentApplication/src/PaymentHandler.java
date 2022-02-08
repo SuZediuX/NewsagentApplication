@@ -24,7 +24,7 @@ public class PaymentHandler {
 	
 	//Define constructor
 	public PaymentHandler(int payID, String payMethod) throws PaymentHandlerExceptionHandler {
-		id = 0; //auto increment in DB
+		//id = 0; //auto increment in DB
 		
 		//validate inputs
 		try {
@@ -46,11 +46,12 @@ public class PaymentHandler {
     	else if (payID>999999)
     		throw new PaymentHandlerExceptionHandler("Payment ID above expected range");
 	}
+    
     public static void validateMethod(String payMethod) throws PaymentHandlerExceptionHandler{
     	//throw new RuntimeException("No code written");
     	if (payMethod.isBlank() || payMethod.isEmpty())
     		throw new PaymentHandlerExceptionHandler("No input received for Payment method");
-    	else if(payMethod != "Cash" || payMethod != "Card")
+    	else if(!"Cash".equals(payMethod) || !"Card".equals(payMethod))
     		throw new PaymentHandlerExceptionHandler("Input not in either expected category");
 	}
 	

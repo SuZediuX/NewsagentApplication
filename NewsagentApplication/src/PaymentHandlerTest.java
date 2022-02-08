@@ -2,13 +2,13 @@ import junit.framework.TestCase;
 
 public class PaymentHandlerTest extends TestCase {
     //Test No: 1
-	//Objective: To verify if the entered payment ID contains 3 to 6 valid characters between 0 to 9
+	//Objective: To test a valid ID and method input
 	
 	public void testvalidatePaymentID001() {
 		try {
 			PaymentHandler testObject = new PaymentHandler(100, "Cash");
 			//fail("Exception expected");
-			assertEquals(0, testObject.getID());
+			assertEquals(100, testObject.getID());
 			assertEquals("Cash", testObject.getMethod());
 		} catch (PaymentHandlerExceptionHandler e) {
 			// TODO Auto-generated catch block
@@ -19,14 +19,18 @@ public class PaymentHandlerTest extends TestCase {
 		
 	}
 	//Test No: 2
-	//Objective: To verify if the entered payment method contains one among the following of the values: cash, card
+	//Objective: To test an invalid boundary ID below 100 and invalid method input
 	
 	public void testvalidatePaymentID002() {
 		try {
-			
+			//fail("Exception expected");
+			PaymentHandler testObject = new PaymentHandler(99, "Cheque");
+			//assertEquals(99, testObject.getID());
+			//assertEquals("Cheque", testObject.getMethod());
+			fail("Exception expected");
 		}
 		catch(Exception e){
-			
+			fail("Exception not expected");
 		}
 		
 	}
