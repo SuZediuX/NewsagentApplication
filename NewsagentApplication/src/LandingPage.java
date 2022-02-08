@@ -28,6 +28,12 @@ public class LandingPage {
 			case 3: System.out.println("Okay! Passing Control to Delivery Class!");
 			break;
 			case 4: System.out.println("Okay! Passing Control to Payment Class!");
+				try {
+					PaymentHandler newObject = new PaymentHandler(0, data);
+				} catch (PaymentHandlerExceptionHandler e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			break;
 			default: System.out.println("Illegal argument! This message must not be invokeable!");
 			break;
