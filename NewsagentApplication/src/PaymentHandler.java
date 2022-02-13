@@ -51,8 +51,12 @@ public class PaymentHandler {
     	//throw new RuntimeException("No code written");
     	if (payMethod.isBlank() || payMethod.isEmpty())
     		throw new PaymentHandlerExceptionHandler("No input received for Payment method");
-    	else if(!"Cash".equals(payMethod) || !"Card".equals(payMethod))
+    	else if(!"Cash".equals(payMethod) & !"Card".equals(payMethod))
     		throw new PaymentHandlerExceptionHandler("Input not in either expected category");
+    	/*else if(!"Card".equals(payMethod))
+    		throw new PaymentHandlerExceptionHandler("Input not in either expected category");
+    	else if(!"Cash".equals(payMethod))
+    		throw new PaymentHandlerExceptionHandler("Input not in either expected category");*/
 	}
 	
 	//Add new payment record
