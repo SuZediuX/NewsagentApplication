@@ -30,9 +30,7 @@ public class PaymentHandlerTest extends TestCase {
 		
 		public void testvalidatePayment003() {
 			try {
-				PaymentHandler testObject = new PaymentHandler(999999, "000");
-				assertEquals(999999, testObject.getID());
-				testObject.validateMethod("000");
+				PaymentHandler.validateMethod("Cheque");
 				fail("Exception expected");
 			}
 			catch(PaymentHandlerExceptionHandler e){
@@ -45,7 +43,10 @@ public class PaymentHandlerTest extends TestCase {
 		
 		public void testvalidatePayment004() {
 			try {
-				PaymentHandler.validateMethod("Cheque");
+				
+				PaymentHandler testObject = new PaymentHandler(999999, "000");
+				assertEquals(999999, testObject.getID());
+				testObject.validateMethod("000");
 				fail("Exception expected");
 			}
 			catch(PaymentHandlerExceptionHandler e){
