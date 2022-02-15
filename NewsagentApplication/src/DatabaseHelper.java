@@ -18,8 +18,8 @@ public class DatabaseHelper {
 	public DatabaseHelper() throws Exception{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://" + host + "/newsagent2021?" + "user=" + user + "&password=" + password);
-		}
+			connect = DriverManager.getConnection("jdbc:mysql://" + host + "/newsagent2022?" + "user=" + user + "&password=" + password);
+		} 
 		catch(Exception e) {
 			throw e;
 		}
