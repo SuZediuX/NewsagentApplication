@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.28.jar"/>
+	<classpathentry kind="lib" path="lib/hamcrest-all-1.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
