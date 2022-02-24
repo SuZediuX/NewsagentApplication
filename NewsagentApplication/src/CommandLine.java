@@ -46,7 +46,7 @@ public class CommandLine {
 }
 
 
-	private static boolean printCustomerTable(ResultSet rs) throws Exception {
+	private static boolean printPaymentTable(ResultSet rs) throws Exception {
 		
 		//Print The Contents of the Full Customer Table
 		
@@ -57,14 +57,12 @@ public class CommandLine {
 		}
 		System.out.println();
 		while (rs.next()) {
-			int id = rs.getInt("id");
-			String name = rs.getString("custname");
-			String addr = rs.getString("custaddr");
-			String phone = rs.getString("custphone");
-			System.out.printf("%30s", id);
-			System.out.printf("%30s", name);
-			System.out.printf("%30s", addr);
-			System.out.printf("%30s", phone);
+			int payID = rs.getInt("payment_id");
+			String payMethod = rs.getString("payment_method");
+			int custID = rs.getInt("customer_id");
+			System.out.printf("%30s", payID);
+			System.out.printf("%30s", payMethod);
+			System.out.printf("%30s", custID);
 			System.out.println();
 		}// end while
 		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
@@ -105,12 +103,46 @@ public class CommandLine {
 							int payID = Integer.parseInt(ID);
 							System.out.println("Enter Payment Method: \n");
 							String payMethod = keyboard.next();
+							
+							PaymentHandler p = new PaymentHandler(payID, payMethod);
+							
+							boolean insertResult = dao.insertNewPaymentDetail(p);
+							
+							if(insertResult == true)
+								System.out.println("Payment Details Entered!");
+							else
+								System.out.println("ERROR: Please Try Again");
 							break;
 						case "2":
+							ResultSet rs = dao.displayAllPaymentDetails();
+							if(rs == null) {
+								System.out.println("No records found");
+								break;
+							}
+							else {
+								boolean tablePrinted = printPaymentTable(rs);
+								if(tablePrinted == true)
+									rs.close();
+							}
 							break;
 						case "3":
 							break;
 						case "4":
+							System.out.println("Enter Payment ID to be deleted or -99 to Clear all Rows");
+							String deletePayID = keyboard.next();
+							
+							boolean deletePayRes = dao.deletePaymentByID(Integer.parseInt(deletePayID));
+							
+							if((deletePayRes == true) && (deletePayID.equals("-99")))
+								System.out.println("Payment Table Emptied");
+							else if (deletePayRes == true)
+								System.out.println("Payment Record Deleted");
+							else
+								System.out.println("ERROR: Operation Unsuccessful");
+							break;
+						case "99":
+							keepAppOpen = false;
+							System.out.println("Closing the Application");
 							break;
 						default:
 							break;
@@ -120,6 +152,7 @@ public class CommandLine {
 						break;
 				}
 			}
+			keyboard.close();
 			
 		}
 		catch(Exception e) {
