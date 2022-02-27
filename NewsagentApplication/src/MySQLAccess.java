@@ -31,7 +31,7 @@ public class MySQLAccess {
 		boolean insertSuccessfull = true;
 		
 		try {
-			preparedStatement = connect.prepareStatement("INSERT INTO NewsAgent.payment VALUES (?, ?");
+			preparedStatement = connect.prepareStatement("INSERT INTO news_sys.payment(customer_id, payment_method) VALUES (?, ?)");
 			preparedStatement.setInt(1, p.getID());
 			preparedStatement.setString(2, p.getMethod());
 			preparedStatement.executeUpdate();
@@ -46,7 +46,7 @@ public class MySQLAccess {
 	public ResultSet displayAllPaymentDetails() {
 		try {
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM NewsAgent.payment");
+			resultSet = statement.executeQuery("SELECT * FROM news_sys.payment");
 		}
 		catch(Exception e) {
 			resultSet = null;
@@ -54,13 +54,21 @@ public class MySQLAccess {
 		return resultSet;
 	}
 	
+	public boolean updateExistingPaymentDetail(PaymentHandler p) {
+		boolean updateSuccessfull = true;
+		
+		
+		
+		return updateSuccessfull;
+	}
+	
 	public boolean deletePaymentByID(int payID) {
 		boolean deleteSuccessfull = true;
 		try {
 			if(payID == -99)
-				preparedStatement = connect.prepareStatement("DELETE FROM NewsAgent.payment");
+				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment");
 			else 
-				preparedStatement = connect.prepareStatement("DELETE FROM NewsAgent.payment WHERE ID = " + payID);
+				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment WHERE ID = " + payID);
 			preparedStatement.executeUpdate();
 		}
 		catch(Exception e) {

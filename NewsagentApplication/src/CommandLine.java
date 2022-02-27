@@ -77,14 +77,15 @@ public class CommandLine {
 			MySQLAccess dao = new MySQLAccess();
 			
 			Scanner keyboard = new Scanner(System.in);
-			String functionNumber = "-99";
+			String taskNumber = "-99";
+			String operationNumber = "-99";
 			boolean keepAppOpen = true;
 			
 			while(keepAppOpen == true) {
 				listMainMenu();
-				functionNumber = keyboard.next();
+				taskNumber = keyboard.next();
 				
-				switch(functionNumber){
+				switch(taskNumber){
 					case "1":
 						listCustomerMenu();
 						break;
@@ -96,7 +97,8 @@ public class CommandLine {
 						break;
 					case "4":
 						listPaymentMenu();
-						switch(functionNumber) {
+						operationNumber = keyboard.next();
+						switch(operationNumber) {
 						case "1":
 							System.out.println("Enter Payment ID: \n");
 							String ID = keyboard.next();
@@ -108,7 +110,7 @@ public class CommandLine {
 							
 							boolean insertResult = dao.insertNewPaymentDetail(p);
 							
-							if(insertResult == true)
+							if(insertResult == true) 
 								System.out.println("Payment Details Entered!");
 							else
 								System.out.println("ERROR: Please Try Again");
