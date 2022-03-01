@@ -9,12 +9,12 @@ create table customers(
 );
 
 create table subscription_details(
-	order_id int not null,
+	sub_id int not null,
     item_name varchar(50) not null,
     item_qty int not null,
     delivery_frequency int not null,
     customer_id int not null,
-    primary key (order_id),
+    primary key (sub_id),
     foreign key (customer_id) references customers(customer_id)
 );
 
@@ -26,9 +26,20 @@ create table delivery(
 );
 
 create table payment(
-	payment_id int not null,
+	payment_id int not null auto_increment,
     payment_method varchar(10) not null,
     customer_id int not null,
     primary key (payment_id),
     foreign key (customer_id) references customers(customer_id)
-)
+);
+
+insert into customers values (100, 'Korah', 'Blanca', '6145554435'),
+(200, 'Yash', 'Randall', '2095551205'),
+(300, 'Johnathon', 'Millerton', '2125554800'),
+(4, 'Mikayla', 'Damion', '8005557000'),
+(5, 'Kendall', 'Mayte', '5135553043');
+
+insert into payment(customer_id, payment_method) 
+values (100, "cash"),
+(200, "card"),
+(300, "card");
