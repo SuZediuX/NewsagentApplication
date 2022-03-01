@@ -1,4 +1,5 @@
 import junit.framework.TestCase;
+import java.sql.ResultSet;
 
 public class MySQLAccessPaymentTest extends TestCase {
 
@@ -41,9 +42,12 @@ public class MySQLAccessPaymentTest extends TestCase {
 		try {
 			MySQLAccess testHelper = new MySQLAccess();
 			
-			
+			ResultSet testObject = testHelper.displayAllPaymentDetails();
+			if(testObject == null) {
+				fail("No record(s) found");
+			}
 		} catch(Exception e) {
-			
+			fail("Exception not expected!");
 		}
 	}
 	
@@ -52,6 +56,19 @@ public class MySQLAccessPaymentTest extends TestCase {
 	
 	//Test No: 4
 	// Objective: Push Delete statement for Payment successfully
+	
+	public void testValidateMySQLAccess004() {
+		
+		try {
+			MySQLAccess testHelper = new MySQLAccess();
+			
+			boolean testObject = testHelper.deletePaymentByID(200);
+			assertEquals(true, testObject);
+			
+		} catch(Exception e) {
+			fail("Exception not expected!");
+		}
+	}
 	
 	//Test No: 5
 	// Objective:

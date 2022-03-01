@@ -68,7 +68,7 @@ public class MySQLAccess {
 			if(payID == -99)
 				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment");
 			else 
-				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment WHERE ID = " + payID);
+				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment WHERE customer_id = " + payID);
 			preparedStatement.executeUpdate();
 		}
 		catch(Exception e) {
