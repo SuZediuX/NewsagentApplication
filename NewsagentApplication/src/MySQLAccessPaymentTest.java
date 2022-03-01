@@ -54,10 +54,25 @@ public class MySQLAccessPaymentTest extends TestCase {
 	//Test No: 3
 	//Objective: Push Update statement for Payment successfully
 	
+	public void testvalidateMySQLAccess003() {
+		
+		try {
+			MySQLAccess testHelper = new MySQLAccess();
+			PaymentHandler testObject = new PaymentHandler(200, "Cash");
+			
+			boolean result = testHelper.updateExistingPaymentDetail(testObject);
+			
+			assertEquals(200, testObject.getID());
+			assertEquals("Cash", testObject.getMethod());
+		}catch(Exception e) {
+			fail("Exception not expected");
+		}
+	}
+	
 	//Test No: 4
 	// Objective: Push Delete statement for Payment successfully
 	
-	public void testValidateMySQLAccess004() {
+	public void testvalidateMySQLAccess004() {
 		
 		try {
 			MySQLAccess testHelper = new MySQLAccess();

@@ -28,7 +28,7 @@ public class MySQLAccess {
 	//Add your own methods for CRUD
 	
 	public boolean insertNewPaymentDetail(PaymentHandler p) {
-		boolean insertSuccessfull = true;
+		boolean insertSuccessful = true;
 		
 		try {
 			preparedStatement = connect.prepareStatement("INSERT INTO news_sys.payment(customer_id, payment_method) VALUES (?, ?)");
@@ -37,10 +37,10 @@ public class MySQLAccess {
 			preparedStatement.executeUpdate();
 		}
 		catch(Exception e) {
-			insertSuccessfull = false;
+			insertSuccessful = false;
 		}
 		
-		return insertSuccessfull;
+		return insertSuccessful;
 	}
 	
 	public ResultSet displayAllPaymentDetails() {
@@ -55,11 +55,19 @@ public class MySQLAccess {
 	}
 	
 	public boolean updateExistingPaymentDetail(PaymentHandler p) {
-		boolean updateSuccessfull = true;
+		boolean updateSuccessful = true;
 		
+		try {
+			preparedStatement = connect.prepareStatement("UPDATE news_sys.payment SET payment_method = ? WHERE customer_id = ?)");
+			preparedStatement.setInt(1, p.getID());
+			preparedStatement.setString(2, p.getMethod());
+			preparedStatement.executeUpdate();
+		}
+		catch(Exception e) {
+			updateSuccessful = false;
+		}
 		
-		
-		return updateSuccessfull;
+		return updateSuccessful;
 	}
 	
 	public boolean deletePaymentByID(int payID) {

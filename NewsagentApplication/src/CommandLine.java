@@ -100,10 +100,10 @@ public class CommandLine {
 						operationNumber = keyboard.next();
 						switch(operationNumber) {
 						case "1":
-							System.out.println("Enter Payment ID: \n");
+							System.out.println("Enter the Customer's ID: \n");
 							String ID = keyboard.next();
 							int payID = Integer.parseInt(ID);
-							System.out.println("Enter Payment Method: \n");
+							System.out.println("Enter a Payment Method: \n");
 							String payMethod = keyboard.next();
 							
 							PaymentHandler p = new PaymentHandler(payID, payMethod);
@@ -128,6 +128,20 @@ public class CommandLine {
 							}
 							break;
 						case "3":
+							System.out.println("Enter the Customer's ID: \n");
+							String toBeUpdatedID = keyboard.next();
+							int toBeUpdatedPayID = Integer.parseInt(toBeUpdatedID);
+							System.out.println("Enter a new Payment Method: \n");
+							String toBeUpdatedPayMethod = keyboard.next();
+							
+							PaymentHandler pH = new PaymentHandler(toBeUpdatedPayID, toBeUpdatedPayMethod);
+							
+							boolean updateResult = dao.updateExistingPaymentDetail(pH);
+							
+							if(updateResult == true) 
+								System.out.println("Payment Details Entered!");
+							else
+								System.out.println("ERROR: Please Try Again");
 							break;
 						case "4":
 							System.out.println("Enter Payment ID to be deleted or -99 to Clear all Rows");
