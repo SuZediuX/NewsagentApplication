@@ -59,20 +59,4 @@ public class PaymentHandler {
     		throw new PaymentHandlerExceptionHandler("Input not in either expected category");*/
 	}
 	
-	//Add new payment record
-	public void addNewPay(int payID, String payMethod) {
-		throw new RuntimeException("No code written");
-	}
-	//View existing payment record
-    public void viewPay(int payID) {
-		throw new RuntimeException("No code written");
-	}
-	//Modify existing payment record
-	public void updatePay(int payID) {
-		throw new RuntimeException("No code written");		
-	}
-	//Purge existing payment record
-    public void deletePay(int payID) {
-    	throw new RuntimeException("No code written");
-	}
 }
