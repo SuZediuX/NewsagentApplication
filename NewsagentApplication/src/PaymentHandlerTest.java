@@ -69,5 +69,10 @@ public class PaymentHandlerTest extends TestCase {
 					assertEquals("Payment ID above expected range", e.getMessage());
 				}
 			}
+			
+	//Test No: 6
+	//Objective: To test an invalid ID | Branch coverage attempt
+			
+			
 }
 
