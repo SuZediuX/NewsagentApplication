@@ -3,14 +3,14 @@ public class PaymentReminder {
 	
     //Define variables
 	private int id;
-	private int amount;
+	private double amount;
 	private String date;
 	
 	//Define setters
 	void setID(int remID) {
 		id = remID;
 	}
-	void setAmount(int dueAmount) {
+	void setAmount(double dueAmount) {
 		amount = dueAmount;
 	}
 	void setDate(String dueDate) {
@@ -21,7 +21,7 @@ public class PaymentReminder {
 	int getID() {
 		return id;
 	}
-	int getAmount() {
+	double getAmount() {
 		return amount;
 	}
 	String getDate() {
@@ -29,9 +29,9 @@ public class PaymentReminder {
 	}
 	
 	//Define constructor
-	public PaymentReminder(int remID, int dueAmount, String dueDate) throws PaymentReminderExceptionHandler {
+	public PaymentReminder(int remID, double dueAmount, String dueDate) throws PaymentReminderExceptionHandler {
 		try {
-			validateID(dueAmount);
+			validateID(remID);
 			validateAmount(dueAmount);
 			validateDate(dueDate);
 		}
@@ -43,7 +43,7 @@ public class PaymentReminder {
 		throw new RuntimeException("No code written");
 		
 	}
-	public static void validateAmount(int dueAmount) throws PaymentReminderExceptionHandler{
+	public static void validateAmount(double dueAmount) throws PaymentReminderExceptionHandler{
 		throw new RuntimeException("No code written");
 		
 	}
