@@ -40,9 +40,17 @@ public class CommandLine {
     private static void listPaymentMenu() {
     	System.out.println("Choose any one of the following");
 		System.out.println("1. Create a payment record");
-		System.out.println("2. View all payment records");
+		System.out.println("2. View all payment record(s)");
 		System.out.println("3. Update a payment record");
 		System.out.println("4. Delete a payment record");
+}
+    
+    private static void listPaymentReminderMenu() {
+    	System.out.println("Choose any one of the following");
+		System.out.println("1. Create a new payment reminder");
+		System.out.println("2. View all payment reminder(s)");
+		System.out.println("3. Update a payment reminder");
+		System.out.println("4. Delete a payment reminder");
 }
 
 
@@ -76,6 +84,11 @@ public class CommandLine {
 		try {
 			MySQLAccess dao = new MySQLAccess();
 			
+			int payID = 0;
+			int reminderID = 0;
+			String payMethod = "";
+			double reminderAmount = 0;
+			String reminderDate = "";
 			Scanner keyboard = new Scanner(System.in);
 			String taskNumber = "-99";
 			String operationNumber = "-99";
@@ -102,18 +115,24 @@ public class CommandLine {
 						case "1":
 							System.out.println("Enter the Customer's ID: \n");
 							String ID = keyboard.next();
-							int payID = Integer.parseInt(ID);
-							System.out.println("Enter a Payment Method: \n");
-							String payMethod = keyboard.next();
+							try {
+								payID = Integer.parseInt(ID);
+
+								System.out.println("Enter a Payment Method: \n");
+								payMethod = keyboard.next();
+								
+								PaymentHandler p = new PaymentHandler(payID, payMethod);
+								
+								boolean insertResult = dao.insertNewPaymentDetail(p);
+								
+								if(insertResult == true) 
+									System.out.println("Payment Details Entered!");
+								else
+									System.out.println("ERROR: Please Try Again");
+							}catch(Exception e) {
+								System.out.println(e.getMessage());
+							}
 							
-							PaymentHandler p = new PaymentHandler(payID, payMethod);
-							
-							boolean insertResult = dao.insertNewPaymentDetail(p);
-							
-							if(insertResult == true) 
-								System.out.println("Payment Details Entered!");
-							else
-								System.out.println("ERROR: Please Try Again");
 							break;
 						case "2":
 							ResultSet rs = dao.displayAllPaymentDetails();
@@ -132,7 +151,7 @@ public class CommandLine {
 							String toBeUpdatedID = keyboard.next();
 							int toBeUpdatedPayID = Integer.parseInt(toBeUpdatedID);
 							System.out.println("Enter a new Payment Method: \n");
-							String toBeUpdatedPayMethod = keyboard.next();
+							String toBeUpdatedPayMethod = keyboard.next(); 
 							
 							PaymentHandler pH = new PaymentHandler(toBeUpdatedPayID, toBeUpdatedPayMethod);
 							
@@ -161,10 +180,103 @@ public class CommandLine {
 							System.out.println("Closing the Application");
 							break;
 						default:
+							System.out.println("Invalid input!");
+							break;
+						}
+						break;
+					case "5":
+						listPaymentReminderMenu();
+						operationNumber = keyboard.next();
+						switch(operationNumber) {
+						case "1":
+							try {
+								System.out.println("Enter the Customer's ID: \n");
+								String ID = keyboard.next();
+								reminderID = Integer.parseInt(ID);
+
+								System.out.println("Enter the due amount: \n");
+								String Amount = keyboard.next();
+								reminderAmount = Integer.parseInt(Amount);
+								
+								System.out.println("Enter the date due: \n");
+								reminderDate = keyboard.next();
+								
+								PaymentReminder r = new PaymentReminder(reminderID, reminderAmount, reminderDate);
+								
+								boolean insertResult = dao.insertNewPaymentReminder(r);
+								
+								if(insertResult == true) 
+									System.out.println("Payment Details Entered!");
+								else
+									System.out.println("ERROR: Please Try Again");
+							}
+							catch(Exception e) {
+								System.out.println(e.getMessage());
+							}
+							
+							break;
+						case "2":
+							ResultSet rs = dao.displayAllPaymentDetails();
+							if(rs == null) {
+								System.out.println("No records found");
+								break;
+							}
+							else {
+								boolean tablePrinted = printPaymentTable(rs);
+								if(tablePrinted == true)
+									rs.close();
+							}
+							break;
+						case "3":
+							try {
+							System.out.println("Enter the Customer's ID: \n");
+							String toBeUpdatedID = keyboard.next();
+							int toBeUpdatedPayID = Integer.parseInt(toBeUpdatedID);
+							System.out.println("Enter a new Payment Method: \n");
+							String toBeUpdatedPayMethod = keyboard.next(); 
+							
+							PaymentHandler pH = new PaymentHandler(toBeUpdatedPayID, toBeUpdatedPayMethod);
+							
+							boolean updateResult = dao.updateExistingPaymentDetail(pH);
+							
+							if(updateResult == true) 
+								System.out.println("Payment Details Entered!");
+							else
+								System.out.println("ERROR: Please Try Again");
+							break;
+							}
+							catch(Exception e) {
+								System.out.println(e.getMessage());
+							}
+						case "4":
+							try {
+							System.out.println("Enter Payment ID to be deleted or -99 to Clear all Rows");
+							String deletePayID = keyboard.next();
+							
+							boolean deletePayRes = dao.deletePaymentByID(Integer.parseInt(deletePayID));
+							
+							if((deletePayRes == true) && (deletePayID.equals("-99")))
+								System.out.println("Payment Table Emptied");
+							else if (deletePayRes == true)
+								System.out.println("Payment Record Deleted");
+							else
+								System.out.println("ERROR: Operation Unsuccessful");
+							break;
+							}
+							catch(Exception e) {
+								System.out.println(e.getMessage());
+							}
+						case "99":
+							keepAppOpen = false;
+							System.out.println("Closing the Application");
+							break;
+						default:
+							System.out.println("Invalid input!");
 							break;
 						}
 						break;
 					default:
+						System.out.println("Invalid input!");
 						break;
 				}
 			}

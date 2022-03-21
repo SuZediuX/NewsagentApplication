@@ -84,5 +84,65 @@ public class MySQLAccess {
 		}
 		return deleteSuccessfull;
 	}
+	
+	public boolean insertNewPaymentReminder(PaymentReminder r) {
+		boolean insertSuccessful = true;
+		
+		try {
+			preparedStatement = connect.prepareStatement("INSERT INTO news_sys.payment(customer_id, payment_method) VALUES (?, ?)");
+			preparedStatement.setInt(1, r.getID());
+			preparedStatement.setDouble(2, r.getAmount());
+			preparedStatement.setDate(3, java.sql.Date.valueOf(r.getDate()));
+			preparedStatement.executeUpdate();
+		}
+		catch(Exception e) {
+			insertSuccessful = false;
+		}
+		
+		return insertSuccessful;
+	}
+	
+	public ResultSet displayAllPaymentReminders() {
+		try {
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM news_sys.payment");
+		}
+		catch(Exception e) {
+			resultSet = null;
+		}
+		return resultSet;
+	}
+	
+	public boolean updateExistingPaymentReminder(PaymentReminder r) {
+		boolean updateSuccessful = true;
+		
+		try {
+			preparedStatement = connect.prepareStatement("UPDATE news_sys.payment SET payment_method = ? WHERE customer_id = ?)");
+			preparedStatement.setInt(1, r.getID());
+			preparedStatement.setDouble(2, r.getAmount());
+			preparedStatement.setDate(3, java.sql.Date.valueOf(r.getDate()));
+			preparedStatement.executeUpdate();
+		}
+		catch(Exception e) {
+			updateSuccessful = false;
+		}
+		
+		return updateSuccessful;
+	}
+	
+	public boolean deletePaymentReminderByID(int reminderID) {
+		boolean deleteSuccessfull = true;
+		try {
+			if(reminderID == -99)
+				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment");
+			else 
+				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment WHERE customer_id = " + reminderID);
+			preparedStatement.executeUpdate();
+		}
+		catch(Exception e) {
+			deleteSuccessfull = false;
+		}
+		return deleteSuccessfull;
+	}
 
 }

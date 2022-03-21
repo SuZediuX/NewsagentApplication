@@ -1,11 +1,18 @@
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.time.LocalDate;
 
-public class PaymentReminder {
+public class PaymentReminder{
 	
     //Define variables
 	private int id;
 	private double amount;
 	private String date;
-	
+	//private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy[.][-]MM[.][-]dd").withResolverStyle(ResolverStyle.STRICT);
+		
 	//Define setters
 	void setID(int remID) {
 		id = remID;
@@ -38,17 +45,63 @@ public class PaymentReminder {
 		catch(PaymentReminderExceptionHandler e) {
 			throw e;
 		}
+		
+		//DEPRECATED | Attempt to catch multiple exceptions consecutively | Remove before push
+		/*ExecutorService service = Executors.newFixedThreadPool(3);
+		
+		service.submit( ()-> {
+			try { 
+				validateID(remID);
+			} catch (PaymentReminderExceptionHandler e) {
+				e.printStackTrace();
+			}
+		});
+		service.submit( ()-> {
+			try {
+				validateAmount(dueAmount);
+			} catch (PaymentReminderExceptionHandler e) {
+				e.printStackTrace();
+			}
+		});
+		service.submit( ()-> validateDate(dueDate));*/
+		
+		
+		
+		id = remID;
+		amount = dueAmount;
+		date = dueDate;
 	}
-	public static void validateDate(String dueDate) throws PaymentReminderExceptionHandler {
-		throw new RuntimeException("No code written");
+	
+	public static boolean validateDate(String dueDate) throws PaymentReminderExceptionHandler, DateTimeParseException{
+		//throw new PaymentReminderExceptionHandler("No code written");
+		
+		if (dueDate.isBlank() || dueDate.isEmpty())
+			throw new PaymentReminderExceptionHandler("No input received for Date");
+		else
+			try {
+				    LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT));
+				}
+			catch(DateTimeParseException e) {
+				e.printStackTrace();
+				return false;
+			}
+        
+        return true;
 		
 	}
 	public static void validateAmount(double dueAmount) throws PaymentReminderExceptionHandler{
-		throw new RuntimeException("No code written");
+		//throw new PaymentReminderExceptionHandler("No code written");
+		if (dueAmount < 0)
+			throw new PaymentReminderExceptionHandler("Can't be negative");
+		else if (dueAmount == 0)
+			throw new PaymentReminderExceptionHandler("Can't be zero");
 		
 	}
 	public static void validateID(int remID) throws PaymentReminderExceptionHandler{
-		throw new RuntimeException("No code written");
-		
+		//throw new PaymentReminderExceptionHandler("No code written");
+		if(remID<100)
+    		throw new PaymentReminderExceptionHandler("Payment ID below expected range");
+    	else if (remID>999999)
+    		throw new PaymentReminderExceptionHandler("Payment ID above expected range");
 	}
 }
