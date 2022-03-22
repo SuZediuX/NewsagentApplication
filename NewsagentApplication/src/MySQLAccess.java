@@ -89,7 +89,7 @@ public class MySQLAccess {
 		boolean insertSuccessful = true;
 		
 		try {
-			preparedStatement = connect.prepareStatement("INSERT INTO news_sys.payment(customer_id, payment_method) VALUES (?, ?)");
+			preparedStatement = connect.prepareStatement("INSERT INTO news_sys.PAYMENT_REMINDER(CUSTOMER_ID, AMOUNT_DUE, DATE_DUE) VALUES (?, ?, ?)");
 			preparedStatement.setInt(1, r.getID());
 			preparedStatement.setDouble(2, r.getAmount());
 			preparedStatement.setDate(3, java.sql.Date.valueOf(r.getDate()));
@@ -105,7 +105,7 @@ public class MySQLAccess {
 	public ResultSet displayAllPaymentReminders() {
 		try {
 			statement = connect.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM news_sys.payment");
+			resultSet = statement.executeQuery("SELECT * FROM news_sys.pay_reminder");
 		}
 		catch(Exception e) {
 			resultSet = null;
@@ -117,10 +117,11 @@ public class MySQLAccess {
 		boolean updateSuccessful = true;
 		
 		try {
-			preparedStatement = connect.prepareStatement("UPDATE news_sys.payment SET payment_method = ? WHERE customer_id = ?)");
-			preparedStatement.setInt(1, r.getID());
-			preparedStatement.setDouble(2, r.getAmount());
-			preparedStatement.setDate(3, java.sql.Date.valueOf(r.getDate()));
+			preparedStatement = connect.prepareStatement("UPDATE news_sys.PAY_REMINDER SET AMOUNT_DUE = ?, DATE_DUE = ? WHERE CUSTOMER_ID = ?)");
+			
+			preparedStatement.setDouble(1, r.getAmount());
+			preparedStatement.setDate(2, java.sql.Date.valueOf(r.getDate()));
+			preparedStatement.setInt(3, r.getID());
 			preparedStatement.executeUpdate();
 		}
 		catch(Exception e) {
@@ -134,9 +135,9 @@ public class MySQLAccess {
 		boolean deleteSuccessfull = true;
 		try {
 			if(reminderID == -99)
-				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment");
+				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.PAY_REMINDER");
 			else 
-				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.payment WHERE customer_id = " + reminderID);
+				preparedStatement = connect.prepareStatement("DELETE FROM news_sys.PAY_REMINDER WHERE CUSTOMER_ID = " + reminderID);
 			preparedStatement.executeUpdate();
 		}
 		catch(Exception e) {

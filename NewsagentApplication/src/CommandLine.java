@@ -1,5 +1,7 @@
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.Scanner;
 
 public class CommandLine {
@@ -91,11 +93,16 @@ public class CommandLine {
 		}
 		System.out.println();
 		while (rs.next()) {
-			int payID = rs.getInt("payment_id");
-			String payMethod = rs.getString("payment_method");
+			int reminderID = rs.getInt("reminder_id");
+			double dueAmount = rs.getDouble("amount_due");
+			
+			Date localDate = rs.getDate("date_due");
+			String dueDate = localDate.toString();
+			
 			int custID = rs.getInt("customer_id");
-			System.out.printf("%30s", payID);
-			System.out.printf("%30s", payMethod);
+			System.out.printf("%30s", reminderID);
+			System.out.printf("%30s", dueAmount);
+			System.out.printf("%30s", dueDate);
 			System.out.printf("%30s", custID);
 			System.out.println();
 		}// end while
@@ -242,7 +249,7 @@ public class CommandLine {
 							
 							break;
 						case "2":
-							ResultSet rs = dao.displayAllPaymentDetails();
+							ResultSet rs = dao.displayAllPaymentReminders();
 							if(rs == null) {
 								System.out.println("No records found");
 								break;
