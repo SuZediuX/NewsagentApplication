@@ -229,7 +229,7 @@ public class CommandLine {
 
 								System.out.println("Enter the due amount: \n");
 								String Amount = keyboard.next();
-								reminderAmount = Integer.parseInt(Amount);
+								reminderAmount = Double.parseDouble(Amount);
 								
 								System.out.println("Enter the date due: \n");
 								reminderDate = keyboard.next();
@@ -239,7 +239,7 @@ public class CommandLine {
 								boolean insertResult = dao.insertNewPaymentReminder(r);
 								
 								if(insertResult == true) 
-									System.out.println("Payment Details Entered!");
+									System.out.println("Payment Reminder Details Entered!");
 								else
 									System.out.println("ERROR: Please Try Again");
 							}

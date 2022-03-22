@@ -89,7 +89,7 @@ public class MySQLAccess {
 		boolean insertSuccessful = true;
 		
 		try {
-			preparedStatement = connect.prepareStatement("INSERT INTO news_sys.PAYMENT_REMINDER(CUSTOMER_ID, AMOUNT_DUE, DATE_DUE) VALUES (?, ?, ?)");
+			preparedStatement = connect.prepareStatement("INSERT INTO news_sys.PAY_REMINDER(CUSTOMER_ID, AMOUNT_DUE, DATE_DUE) VALUES (?, ?, ?)");
 			preparedStatement.setInt(1, r.getID());
 			preparedStatement.setDouble(2, r.getAmount());
 			preparedStatement.setDate(3, java.sql.Date.valueOf(r.getDate()));
