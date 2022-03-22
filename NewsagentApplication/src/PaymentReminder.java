@@ -3,6 +3,7 @@ import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 
 public class PaymentReminder{
@@ -79,22 +80,24 @@ public class PaymentReminder{
 			throw new PaymentReminderExceptionHandler("No input received for Date");
 		else
 			try {
-				    LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT));
+				LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT));
 				}
 			catch(DateTimeParseException e) {
-				e.printStackTrace();
-				return false;
+				throw new PaymentReminderExceptionHandler("Invalid Calendar Date!");
 			}
-        
+		catch(Exception e) {
+			return false;
+		}
+         
         return true;
 		
 	}
 	public static void validateAmount(double dueAmount) throws PaymentReminderExceptionHandler{
 		//throw new PaymentReminderExceptionHandler("No code written");
-		if (dueAmount < 0)
-			throw new PaymentReminderExceptionHandler("Can't be negative");
-		else if (dueAmount == 0)
-			throw new PaymentReminderExceptionHandler("Can't be zero");
+		if (dueAmount < 0 || dueAmount == 0)
+			throw new PaymentReminderExceptionHandler("Can't be negative or zero!");
+		/*else if (dueAmount == 0)
+			throw new PaymentReminderExceptionHandler("Can't be zero");*/
 		
 	}
 	public static void validateID(int remID) throws PaymentReminderExceptionHandler{
