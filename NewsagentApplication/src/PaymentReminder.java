@@ -46,7 +46,7 @@ public class PaymentReminder{
 			throw e;
 		}
 		
-		//DEPRECATED | Attempt to catch multiple exceptions consecutively | Remove before push
+		//DEPRECATED | Attempt to catch multiple exceptions consecutively | Remove before end of Sprint #2 | MUTATION TESTING | All Test Cases Passed
 		/*ExecutorService service = Executors.newFixedThreadPool(3);
 		
 		service.submit( ()-> {

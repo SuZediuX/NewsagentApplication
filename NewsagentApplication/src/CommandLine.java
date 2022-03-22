@@ -10,6 +10,7 @@ public class CommandLine {
 		System.out.println("2. Manage Subscription(s)");
 		System.out.println("3. Manage Deliveries");
 		System.out.println("4. Manage Payment(s)");
+		System.out.println("5. Manage Reminder(s)");
 	}
 	
 	private static void listCustomerMenu() {
@@ -56,7 +57,32 @@ public class CommandLine {
 
 	private static boolean printPaymentTable(ResultSet rs) throws Exception {
 		
-		//Print The Contents of the Full Customer Table
+		//Print The Contents of the Payment Table
+		
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("Table: " + rs.getMetaData().getTableName(1));
+		for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+			System.out.printf("%30s",rs.getMetaData().getColumnName(i));
+		}
+		System.out.println();
+		while (rs.next()) {
+			int payID = rs.getInt("payment_id");
+			String payMethod = rs.getString("payment_method");
+			int custID = rs.getInt("customer_id");
+			System.out.printf("%30s", payID);
+			System.out.printf("%30s", payMethod);
+			System.out.printf("%30s", custID);
+			System.out.println();
+		}// end while
+		System.out.println("--------------------------------------------------------------------------------------------------------------------------------------");
+		
+		return true;
+		
+	}
+	
+    private static boolean printReminderTable(ResultSet rs) throws Exception {
+		
+		//Print The Contents of the Payment Table
 		
 		System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println("Table: " + rs.getMetaData().getTableName(1));
@@ -222,7 +248,7 @@ public class CommandLine {
 								break;
 							}
 							else {
-								boolean tablePrinted = printPaymentTable(rs);
+								boolean tablePrinted = printReminderTable(rs);
 								if(tablePrinted == true)
 									rs.close();
 							}
@@ -232,12 +258,17 @@ public class CommandLine {
 							System.out.println("Enter the Customer's ID: \n");
 							String toBeUpdatedID = keyboard.next();
 							int toBeUpdatedPayID = Integer.parseInt(toBeUpdatedID);
-							System.out.println("Enter a new Payment Method: \n");
-							String toBeUpdatedPayMethod = keyboard.next(); 
 							
-							PaymentHandler pH = new PaymentHandler(toBeUpdatedPayID, toBeUpdatedPayMethod);
+							System.out.println("Enter a new due amount: \n");
+							String toBeUpdatedAmount = keyboard.next(); 
+							Double toBeUpdatedReminderAmount = Double.parseDouble(toBeUpdatedAmount);
 							
-							boolean updateResult = dao.updateExistingPaymentDetail(pH);
+							System.out.println("Enter a new due date: \n");
+							String toBeUpdatedDate = keyboard.next();
+							
+							PaymentReminder r = new PaymentReminder(toBeUpdatedPayID, toBeUpdatedReminderAmount, toBeUpdatedDate);
+							
+							boolean updateResult = dao.updateExistingPaymentReminder(r);
 							
 							if(updateResult == true) 
 								System.out.println("Payment Details Entered!");
@@ -251,11 +282,11 @@ public class CommandLine {
 						case "4":
 							try {
 							System.out.println("Enter Payment ID to be deleted or -99 to Clear all Rows");
-							String deletePayID = keyboard.next();
+							String deleteReminderID = keyboard.next();
 							
-							boolean deletePayRes = dao.deletePaymentByID(Integer.parseInt(deletePayID));
+							boolean deletePayRes = dao.deletePaymentReminderByID(Integer.parseInt(deleteReminderID));
 							
-							if((deletePayRes == true) && (deletePayID.equals("-99")))
+							if((deletePayRes == true) && (deleteReminderID.equals("-99")))
 								System.out.println("Payment Table Emptied");
 							else if (deletePayRes == true)
 								System.out.println("Payment Record Deleted");
