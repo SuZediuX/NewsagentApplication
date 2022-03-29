@@ -12,16 +12,34 @@ public class PaymentReminder{
 	private int id;
 	private double amount;
 	private String date;
-	//private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy[.][-]MM[.][-]dd").withResolverStyle(ResolverStyle.STRICT);
+	private static LocalDate validAfterThis = LocalDate.of(2022, 01, 01);
 		
 	//Define setters
-	void setID(int remID) {
+	void setID(int remID) throws PaymentReminderExceptionHandler {
+		try {
+			validateID(remID);
+		}
+		catch(PaymentReminderExceptionHandler e) {
+			throw e;
+		}
 		id = remID;
 	}
-	void setAmount(double dueAmount) {
+	void setAmount(double dueAmount) throws PaymentReminderExceptionHandler {
+		try {
+			validateAmount(dueAmount);
+		}
+		catch(PaymentReminderExceptionHandler e) {
+			throw e;
+		}
 		amount = dueAmount;
 	}
-	void setDate(String dueDate) {
+	void setDate(String dueDate) throws PaymentReminderExceptionHandler {
+		try {
+			validateDate(dueDate);
+		}
+		catch(PaymentReminderExceptionHandler e) {
+			throw e;
+		}
 		date = dueDate;
 	}
 	
@@ -65,35 +83,28 @@ public class PaymentReminder{
 			}
 		});
 		service.submit( ()-> validateDate(dueDate));*/
-		
-		
-		
+
 		id = remID;
 		amount = dueAmount;
 		date = dueDate;
 	}
 	
-	public static boolean validateDate(String dueDate) throws PaymentReminderExceptionHandler, DateTimeParseException{
-		//throw new PaymentReminderExceptionHandler("No code written");
-		
-		if (dueDate.isBlank() || dueDate.isEmpty())
-			throw new PaymentReminderExceptionHandler("No input received for Date");
-		else
+	public static void validateDate(String dueDate) throws PaymentReminderExceptionHandler, DateTimeParseException{
+
+		if (dueDate.isEmpty() || dueDate.isBlank())
+			throw new PaymentReminderExceptionHandler("No input received for Date!");
+		else 
 			try {
-				LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT));
+			if ((LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT))).isAfter(validAfterThis)==false)
+				throw new PaymentReminderExceptionHandler("Invalid Calendar Date!");
 				}
 			catch(DateTimeParseException e) {
 				throw new PaymentReminderExceptionHandler("Invalid Calendar Date!");
 			}
-		catch(Exception e) {
-			return false;
-		}
-         
-        return true;
-		
+
 	}
 	public static void validateAmount(double dueAmount) throws PaymentReminderExceptionHandler{
-		//throw new PaymentReminderExceptionHandler("No code written");
+
 		if (dueAmount < 0 || dueAmount == 0)
 			throw new PaymentReminderExceptionHandler("Can't be negative or zero!");
 		/*else if (dueAmount == 0)
@@ -101,7 +112,7 @@ public class PaymentReminder{
 		
 	}
 	public static void validateID(int remID) throws PaymentReminderExceptionHandler{
-		//throw new PaymentReminderExceptionHandler("No code written");
+
 		if(remID<100)
     		throw new PaymentReminderExceptionHandler("Payment ID below expected range");
     	else if (remID>999999)

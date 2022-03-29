@@ -58,9 +58,9 @@ public class MySQLAccess {
 		boolean updateSuccessful = true;
 		
 		try {
-			preparedStatement = connect.prepareStatement("UPDATE news_sys.payment SET payment_method = ? WHERE customer_id = ?)");
-			preparedStatement.setInt(1, p.getID());
-			preparedStatement.setString(2, p.getMethod());
+			preparedStatement = connect.prepareStatement("UPDATE news_sys.payment SET payment_method = ? WHERE customer_id = ?");
+			preparedStatement.setInt(2, p.getID());
+			preparedStatement.setString(1, p.getMethod());
 			preparedStatement.executeUpdate();
 		}
 		catch(Exception e) {

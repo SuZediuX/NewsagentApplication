@@ -146,12 +146,13 @@ public class CommandLine {
 						operationNumber = keyboard.next();
 						switch(operationNumber) {
 						case "1":
-							System.out.println("Enter the Customer's ID: \n");
-							String ID = keyboard.next();
 							try {
+							System.out.println("Enter the existing CUSTOMER ID: \n");
+							String ID = keyboard.next();
+							//try {
 								payID = Integer.parseInt(ID);
 
-								System.out.println("Enter a Payment Method: \n");
+								System.out.println("Enter a PAYMENT METHOD: \n");
 								payMethod = keyboard.next();
 								
 								PaymentHandler p = new PaymentHandler(payID, payMethod);
@@ -163,7 +164,8 @@ public class CommandLine {
 								else
 									System.out.println("ERROR: Please Try Again");
 							}catch(Exception e) {
-								System.out.println(e.getMessage());
+								System.out.println("Invalid Input!"+e.getMessage());
+								break;
 							}
 							
 							break;
@@ -180,10 +182,11 @@ public class CommandLine {
 							}
 							break;
 						case "3":
-							System.out.println("Enter the Customer's ID: \n");
+							try {
+							System.out.println("Enter the existing CUSTOMER ID: \n");
 							String toBeUpdatedID = keyboard.next();
 							int toBeUpdatedPayID = Integer.parseInt(toBeUpdatedID);
-							System.out.println("Enter a new Payment Method: \n");
+							System.out.println("Enter a new PAYMENT METHOD: \n");
 							String toBeUpdatedPayMethod = keyboard.next(); 
 							
 							PaymentHandler pH = new PaymentHandler(toBeUpdatedPayID, toBeUpdatedPayMethod);
@@ -195,8 +198,14 @@ public class CommandLine {
 							else
 								System.out.println("ERROR: Please Try Again");
 							break;
+							}
+							catch(Exception e) {
+								System.out.println("Invalid Input!"+e.getMessage());
+								break;
+							}
 						case "4":
-							System.out.println("Enter Payment ID to be deleted or -99 to Clear all Rows");
+							try {
+							System.out.println("Enter the existing and associated CUSTOMER ID to be deleted or -99 to Clear all Rows");
 							String deletePayID = keyboard.next();
 							
 							boolean deletePayRes = dao.deletePaymentByID(Integer.parseInt(deletePayID));
@@ -208,6 +217,11 @@ public class CommandLine {
 							else
 								System.out.println("ERROR: Operation Unsuccessful");
 							break;
+							}
+							catch(Exception e) {
+								System.out.println("Invalid Input!"+e.getMessage());
+								break;
+							}
 						case "99":
 							keepAppOpen = false;
 							System.out.println("Closing the Application");
@@ -223,15 +237,15 @@ public class CommandLine {
 						switch(operationNumber) {
 						case "1":
 							try {
-								System.out.println("Enter the Customer's ID: \n");
+								System.out.println("Enter the existing CUSTOMER ID: \n");
 								String ID = keyboard.next();
 								reminderID = Integer.parseInt(ID);
 
-								System.out.println("Enter the due amount: \n");
+								System.out.println("Enter the DUE AMOUNT: \n");
 								String Amount = keyboard.next();
 								reminderAmount = Double.parseDouble(Amount);
 								
-								System.out.println("Enter the date due: \n");
+								System.out.println("Enter the DATE DUE: \n");
 								reminderDate = keyboard.next();
 								
 								PaymentReminder r = new PaymentReminder(reminderID, reminderAmount, reminderDate);
@@ -244,7 +258,7 @@ public class CommandLine {
 									System.out.println("ERROR: Please Try Again");
 							}
 							catch(Exception e) {
-								System.out.println(e.getMessage());
+								System.out.println("Invalid Input!"+e.getMessage());
 							}
 							
 							break;
@@ -262,15 +276,15 @@ public class CommandLine {
 							break;
 						case "3":
 							try {
-							System.out.println("Enter the Customer's ID: \n");
+							System.out.println("Enter the existing CUSTOMER ID: \n");
 							String toBeUpdatedID = keyboard.next();
 							int toBeUpdatedPayID = Integer.parseInt(toBeUpdatedID);
 							
-							System.out.println("Enter a new due amount: \n");
+							System.out.println("Enter a new DUE AMOUNT: \n");
 							String toBeUpdatedAmount = keyboard.next(); 
 							Double toBeUpdatedReminderAmount = Double.parseDouble(toBeUpdatedAmount);
 							
-							System.out.println("Enter a new due date: \n");
+							System.out.println("Enter a new DUE DATE: \n");
 							String toBeUpdatedDate = keyboard.next();
 							
 							PaymentReminder r = new PaymentReminder(toBeUpdatedPayID, toBeUpdatedReminderAmount, toBeUpdatedDate);
@@ -284,11 +298,13 @@ public class CommandLine {
 							break;
 							}
 							catch(Exception e) {
-								System.out.println(e.getMessage());
+								System.out.println("Invalid Input!"+e.getMessage());
+								break;
 							}
+							
 						case "4":
 							try {
-							System.out.println("Enter Payment ID to be deleted or -99 to Clear all Rows");
+							System.out.println("Enter the existing and associated CUSTOMER ID to be deleted or -99 to Clear all Rows");
 							String deleteReminderID = keyboard.next();
 							
 							boolean deletePayRes = dao.deletePaymentReminderByID(Integer.parseInt(deleteReminderID));
@@ -302,7 +318,8 @@ public class CommandLine {
 							break;
 							}
 							catch(Exception e) {
-								System.out.println(e.getMessage());
+								System.out.println("Invalid Input!"+e.getMessage());
+								break;
 							}
 						case "99":
 							keepAppOpen = false;

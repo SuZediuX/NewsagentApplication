@@ -30,7 +30,7 @@ public class PaymentHandler {
 		try {
 			validateID(payID);
 			validateMethod(payMethod);
-		}
+		} 
 		catch(PaymentHandlerExceptionHandler e) {
 			throw e;
 		}

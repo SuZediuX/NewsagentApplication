@@ -90,4 +90,26 @@ public class MySQLAccessPaymentTest extends TestCase {
 	
 	//Test No: 6
 	// Objective:
+	
+	//Test No: 7
+	// Objective:
+	
+public void testvalidateMySQLAccess005() {
+		
+		try {
+			MySQLAccess testHelper = new MySQLAccess();
+			PaymentReminder testObject = new PaymentReminder(200, 100.101, "2022-01-01");
+			
+			boolean result = testHelper.updateExistingPaymentReminder(testObject);
+			
+			assertEquals(200, testObject.getID());
+			assertEquals(100.101, testObject.getAmount());
+			assertEquals("2022-01-01", testObject.getDate());
+		}catch(Exception e) {
+			fail("Exception not expected");
+		}
+	}
+	
+	//Test No: 8
+	// Objective:
 }
