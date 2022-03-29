@@ -12,34 +12,19 @@ public class PaymentReminder{
 	private int id;
 	private double amount;
 	private String date;
-	private static LocalDate validAfterThis = LocalDate.of(2022, 01, 01);
+	private static LocalDate validAfterThis = LocalDate.of(2021, 12, 31);
 		
 	//Define setters
-	void setID(int remID) throws PaymentReminderExceptionHandler {
-		try {
-			validateID(remID);
-		}
-		catch(PaymentReminderExceptionHandler e) {
-			throw e;
-		}
+	void setID(int remID){
+
 		id = remID;
 	}
-	void setAmount(double dueAmount) throws PaymentReminderExceptionHandler {
-		try {
-			validateAmount(dueAmount);
-		}
-		catch(PaymentReminderExceptionHandler e) {
-			throw e;
-		}
+	void setAmount(double dueAmount){
+
 		amount = dueAmount;
 	}
-	void setDate(String dueDate) throws PaymentReminderExceptionHandler {
-		try {
-			validateDate(dueDate);
-		}
-		catch(PaymentReminderExceptionHandler e) {
-			throw e;
-		}
+	void setDate(String dueDate){
+
 		date = dueDate;
 	}
 	
@@ -92,30 +77,30 @@ public class PaymentReminder{
 	public static void validateDate(String dueDate) throws PaymentReminderExceptionHandler, DateTimeParseException{
 
 		if (dueDate.isEmpty() || dueDate.isBlank())
-			throw new PaymentReminderExceptionHandler("No input received for Date!");
+			throw new PaymentReminderExceptionHandler("No input received for DATE!");
 		else 
 			try {
 			if ((LocalDate.parse(dueDate, DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT))).isAfter(validAfterThis)==false)
-				throw new PaymentReminderExceptionHandler("Invalid Calendar Date!");
+				throw new PaymentReminderExceptionHandler("Invalid DUE DATE!");
 				}
 			catch(DateTimeParseException e) {
-				throw new PaymentReminderExceptionHandler("Invalid Calendar Date!");
+				throw new PaymentReminderExceptionHandler("Invalid DUE DATE!");
 			}
 
 	}
 	public static void validateAmount(double dueAmount) throws PaymentReminderExceptionHandler{
 
 		if (dueAmount < 0 || dueAmount == 0)
-			throw new PaymentReminderExceptionHandler("Can't be negative or zero!");
-		/*else if (dueAmount == 0)
-			throw new PaymentReminderExceptionHandler("Can't be zero");*/
+			throw new PaymentReminderExceptionHandler("DUE AMOUNT can't be negative or zero!");
+		else if (dueAmount > 100000)
+			throw new PaymentReminderExceptionHandler("DUE AMOUNT above currently accepted threshold!");
 		
 	}
 	public static void validateID(int remID) throws PaymentReminderExceptionHandler{
 
 		if(remID<100)
-    		throw new PaymentReminderExceptionHandler("Payment ID below expected range");
+    		throw new PaymentReminderExceptionHandler("CUSTOMER ID below expected range");
     	else if (remID>999999)
-    		throw new PaymentReminderExceptionHandler("Payment ID above expected range");
+    		throw new PaymentReminderExceptionHandler("CUSTOMER ID above expected range");
 	}
 }
