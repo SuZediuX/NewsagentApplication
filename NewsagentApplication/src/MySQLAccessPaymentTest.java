@@ -81,20 +81,50 @@ public class MySQLAccessPaymentTest extends TestCase {
 			assertEquals(true, testObject);
 			
 		} catch(Exception e) {
-			fail("Exception not expected!");
+			fail("Exception not expected!"); 
 		}
 	}
 	
 	//Test No: 5
-	// Objective:
+	// Objective: Push Read statement for Payment Reminder successfully
+	
+	public void testvalidateMySQLAccess005() {
+		
+		try {
+			MySQLAccess testHelper = new MySQLAccess();
+			PaymentReminder testObject = new PaymentReminder(300, 10101.101, "2022-02-02");
+			
+			boolean result = testHelper.insertNewPaymentReminder(testObject);
+			
+			assertEquals(300, testObject.getID());
+			assertEquals(10101.101, testObject.getAmount());
+			assertEquals("2022-02-02", testObject.getDate());
+		} catch(Exception e) {
+			fail("Exception not expected!");
+		}
+	}
 	
 	//Test No: 6
-	// Objective:
+	// Objective: Push Read statement for Payment Reminder successfully
+	
+	public void testvalidateMySQLAccess006() {
+		
+		try {
+			MySQLAccess testHelper = new MySQLAccess();
+			
+			ResultSet testObject = testHelper.displayAllPaymentReminders();
+			if(testObject == null) {
+				fail("No record(s) found");
+			}
+		} catch(Exception e) {
+			fail("Exception not expected!");
+		}
+	}
 	
 	//Test No: 7
-	// Objective:
+	// Objective: Push Update statement for Payment Reminder successfully
 	
-public void testvalidateMySQLAccess005() {
+public void testvalidateMySQLAccess007() {
 		
 		try {
 			MySQLAccess testHelper = new MySQLAccess();
@@ -111,5 +141,34 @@ public void testvalidateMySQLAccess005() {
 	}
 	
 	//Test No: 8
-	// Objective:
+	// Objective: Push Delete statement for Payment Reminder successfully
+
+public void testvalidateMySQLAccess008() {
+	
+	try {
+		MySQLAccess testHelper = new MySQLAccess();
+		
+		boolean testObject = testHelper.deletePaymentReminderByID(200);
+		assertEquals(true, testObject);
+		
+	} catch(Exception e) {
+		fail("Exception not expected!"); 
+	}
+}
+
+    //Test No: 9
+	// Objective: Push Delete statement for Payment Reminder successfully | Delete all
+
+public void testvalidateMySQLAccess009() {
+	
+	try {
+		MySQLAccess testHelper = new MySQLAccess();
+		
+		boolean testObject = testHelper.deletePaymentReminderByID(-99);
+		assertEquals(true, testObject);
+		
+	} catch(Exception e) {
+		fail("Exception not expected!"); 
+	}
+}
 }
