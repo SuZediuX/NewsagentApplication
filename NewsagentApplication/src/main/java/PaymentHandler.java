@@ -1,4 +1,3 @@
-
 public class PaymentHandler {
 	//Define vars
 	private int id;

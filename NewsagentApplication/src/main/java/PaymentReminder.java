@@ -1,9 +1,6 @@
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 
 public class PaymentReminder{
@@ -56,14 +53,14 @@ public class PaymentReminder{
 		service.submit( ()-> {
 			try { 
 				validateID(remID);
-			} catch (PaymentReminderExceptionHandler e) {
+			} catch (main.PaymentReminderExceptionHandler e) {
 				e.printStackTrace();
 			}
 		});
 		service.submit( ()-> {
 			try {
 				validateAmount(dueAmount);
-			} catch (PaymentReminderExceptionHandler e) {
+			} catch (main.PaymentReminderExceptionHandler e) {
 				e.printStackTrace();
 			}
 		});

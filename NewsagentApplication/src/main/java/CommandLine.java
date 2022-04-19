@@ -1,6 +1,4 @@
 import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.sql.Connection;
 import java.sql.Date;
 import java.util.Scanner;
 
@@ -113,6 +111,7 @@ public class CommandLine {
 	}
     
 	public static void main(String[] args) {
+		System.out.println("Hi");
 		// TODO Auto-generated method stub
 		try {
 			MySQLAccess dao = new MySQLAccess();
@@ -330,6 +329,9 @@ public class CommandLine {
 							break;
 						}
 						break;
+					case "99":
+						keepAppOpen = false;
+						System.out.println("Closing the Application");
 					default:
 						System.out.println("Invalid input!");
 						break;

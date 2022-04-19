@@ -1,4 +1,3 @@
-
 public class PaymentReminderExceptionHandler extends Exception {
     String message;
 	

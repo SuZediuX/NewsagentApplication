@@ -1,10 +1,11 @@
 import junit.framework.TestCase;
+
 import java.sql.ResultSet;
 
 public class MySQLAccessPaymentTest extends TestCase {
 
 	//Test No: 0
-	//Objective: Successfully instantiate MySQLAccess object
+	//Objective: Successfully instantiate main.MySQLAccess object
 	
 	public void testvalidateMySQLAccess000() {
 		

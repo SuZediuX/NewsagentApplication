@@ -1,4 +1,4 @@
-import junit.framework.TestCase; 
+import junit.framework.TestCase;
 //
 
 public class PaymentHandlerTest extends TestCase {
